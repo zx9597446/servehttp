@@ -17,7 +17,7 @@ func main() {
 	flag.Parse()
 	m := martini.Classic()
 	m.Use(martini.Static(*dir))
-	addr := fmt.Sprintf(":%s", *port)
+	addr := fmt.Sprintf(":%d", *port)
 	log.Printf("serve http %s on %s\n", *dir, addr)
 	log.Fatal(http.ListenAndServe(addr, m))
 }
