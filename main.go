@@ -2,7 +2,7 @@ package main
 
 import "flag"
 import "fmt"
-import "github.com/codegangsta/martini"
+import "github.com/go-martini/martini"
 
 import "log"
 import "net/http"
