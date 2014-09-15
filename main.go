@@ -1,24 +1,23 @@
 package main
 
+import "flag"
+import "fmt"
 import "github.com/codegangsta/martini"
-import "io/ioutil"
+
 import "log"
 import "net/http"
 
-const defaultAddr = ":80"
+const defaultPort = 80
+const defaultDir = "."
 
-func viascan() string {
-	b, err := ioutil.ReadFile("viascan.html")
-	if err != nil {
-		log.Panicln(err, b)
-	}
-	return string(b)
-}
+var port = flag.Int("p", defaultPort, "port to listen")
+var dir = flag.String("d", defaultDir, "directory to serve")
 
 func main() {
+	flag.Parse()
 	m := martini.Classic()
-	m.Use(martini.Static("."))
-	m.Get("/viascan", viascan)
-	log.Printf("serve http %s\n", defaultAddr)
-	log.Fatal(http.ListenAndServe(defaultAddr, m))
+	m.Use(martini.Static(*dir))
+	addr := fmt.Sprintf(":%s", *port)
+	log.Printf("serve http %s on %s\n", *dir, addr)
+	log.Fatal(http.ListenAndServe(addr, m))
 }
